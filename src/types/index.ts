@@ -28,19 +28,27 @@ export interface selectKeyOptionInt {
     inp: string
 }
 
-interface optionTypeInt {
+interface selectTypeInt {
     jobName: string,
     payArea: string,
     cityId: number,
     education: string,
 }
 
+export interface optionTypeInt {
+    workingYears: string[],
+    Welfares: string[],
+    PayMonths: string[],
+    PayFilter: string[],
+}
+
 export class Initdata {
     jobs: Array<jobsTypeInt> = [];
-    option: optionTypeInt = {
+    select: selectTypeInt = {
         jobName: '',
         payArea: '',
         cityId: 0,
         education: '',
-    }
+    };
+    option: Array<optionTypeInt> = []
 }

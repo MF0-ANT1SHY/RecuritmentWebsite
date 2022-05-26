@@ -1,5 +1,12 @@
 import Mock from 'mockjs'
 
+const Requirement = {
+    'WorkingYears': ['1', '2', '3', '4', '5'],
+    'Welfares': ['五险一金', '专业培训', '免费班车', '年假'],
+    'PayMonths': ['12', '13', '14', '15'],
+    'PayFilter': ['under 3k', '3-5k', '5-10k', '10-15k'],
+}
+
 Mock.mock('/mock/Job', 'get', {
     'data|5': [{
         "jobName": "C# engineer",
@@ -15,3 +22,5 @@ Mock.mock('/mock/Job', 'get', {
         "id": 115514
     }]
 })
+
+Mock.mock('/mock/Requirement', 'get', { data: Requirement })

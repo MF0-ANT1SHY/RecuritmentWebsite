@@ -5,15 +5,17 @@
     </TitleCom>
     <div class="select-box">
       <div class="search-box">
-        <input type="text" placeholder="实习生招聘" />
+        <input v-model="select.jobName" type="text" placeholder="实习生招聘" />
         <img src="../assets/search.png" alt="" />
       </div>
       <div class="list-box">
         <div v-for="i in selectKey" :key="i.key" class="list">
           <span class="label">{{ i.name }}:</span>
-          <span>1</span>
-          <span>2</span>
-          <span>3</span>
+          <span>不限</span>
+          <span
+            v-for="(s, index) in options[getKey(i, i.key)]"
+            :key="index"
+          ></span>
         </div>
       </div>
     </div>
@@ -26,8 +28,8 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import TitleCom from "@/components/TitleCom.vue";
-import { getJob } from "../http/job";
-import { selectKeyOptionInt, Initdata } from "../types/index";
+import { getJob, getRequirement } from "../http/job";
+import { selectKeyOptionInt, Initdata, optionTypeInt } from "../types/index";
 
 export default defineComponent({
   components: { TitleCom },
@@ -38,6 +40,10 @@ export default defineComponent({
     onMounted(() => {
       getJob({}).then((res: any) => {
         data.jobs = res.data;
+      });
+      getRequirement().then((res: any) => {
+        console.log(res);
+        data.option = res.data;
       });
     });
 
@@ -57,15 +63,17 @@ export default defineComponent({
         name: "working salary",
         inp: "payArea",
       },
-      {
-        key: "Range",
-        name: "salary range",
-        inp: "payArea",
-      },
     ];
+    const getKey = (
+      o: selectKeyOptionInt,
+      k: keyof typeof o
+    ): keyof typeof data.option => {
+      return o[k] as any;
+    };
     return {
       ...toRefs(data),
       selectKey,
+      getKey,
     };
   },
 });
