@@ -18,13 +18,13 @@
       </div>
     </div>
     <div class="jobs-list">
-      <div v-for="i in jobs"></div>
+      <div v-for="i in jobs" :key="i.id">{{ i.jobName }}</div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from "vue";
+import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import TitleCom from "@/components/TitleCom.vue";
 import { getJob } from "../http/job";
 import { selectKeyOptionInt, Initdata } from "../types/index";
@@ -64,7 +64,7 @@ export default defineComponent({
       },
     ];
     return {
-      data,
+      ...toRefs(data),
       selectKey,
     };
   },
