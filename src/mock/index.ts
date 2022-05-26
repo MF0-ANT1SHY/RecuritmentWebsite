@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
 
-Mock.mock('/Job', 'get', {
+Mock.mock('/mock/Job', 'get', {
     'data|5': [{
         "jobName": "C# engineer",
         "payMin": "10",

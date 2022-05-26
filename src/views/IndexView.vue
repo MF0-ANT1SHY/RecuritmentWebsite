@@ -17,6 +17,9 @@
         </div>
       </div>
     </div>
+    <div class="jobs-list">
+      <div v-for="i in jobs"></div>
+    </div>
   </div>
 </template>
 
@@ -24,20 +27,21 @@
 import { defineComponent, onMounted, reactive } from "vue";
 import TitleCom from "@/components/TitleCom.vue";
 import { getJob } from "../http/job";
-import { selectKeyOptionInt, selectInt } from "../types/index";
+import { selectKeyOptionInt, Initdata } from "../types/index";
 
 export default defineComponent({
   components: { TitleCom },
   setup() {
-    const data = reactive({});
+    const data = reactive(new Initdata());
 
+    //生命周期
     onMounted(() => {
       getJob({}).then((res: any) => {
-        console.log(res);
+        data.jobs = res.data;
       });
     });
 
-    const selectKey = [
+    const selectKey: Array<selectKeyOptionInt> = [
       {
         key: "WorkingYears",
         name: "working experiences",
@@ -60,6 +64,7 @@ export default defineComponent({
       },
     ];
     return {
+      data,
       selectKey,
     };
   },
